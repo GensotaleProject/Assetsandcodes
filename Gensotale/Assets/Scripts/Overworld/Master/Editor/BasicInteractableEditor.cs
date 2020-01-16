@@ -119,6 +119,14 @@ public class BasicInteractableEditor : Editor
         if (shownInteraction >= thisData.interactionEffects.Count)
             thisData.interactionEffects.Add(new BaseInteractable.InteractionEffects());
 
+        GUILayout.Space(16);
+        thisData.interactionEffects[shownInteraction].dialogue = (TextData)EditorGUILayout.ObjectField("Dialogue to play", thisData.interactionEffects[shownInteraction].dialogue, typeof(TextData), true);
+        if (thisData.interactionEffects[shownInteraction].dialogue != null)
+            thisData.interactionEffects[shownInteraction].waitForDialogue = EditorGUILayout.Toggle("Wait for Dialogue Finish", thisData.interactionEffects[shownInteraction].waitForDialogue);
+        else
+            thisData.interactionEffects[shownInteraction].waitForDialogue = false;
+        GUILayout.Space(16);
+
         for (int i = 0; i < thisData.interactionEffects[shownInteraction].varChanges.Count; i++)
         {
             EditorGUILayout.BeginHorizontal();
@@ -192,6 +200,9 @@ public class BasicInteractableEditor : Editor
                                 case "SpriteRenderer":
                                     thisTrigger.functionParams[k].varType = BaseInteractable.VarTypes.SpriteRenderer;
                                     break;
+                                case "TextData":
+                                    thisTrigger.functionParams[k].varType = BaseInteractable.VarTypes.TextData;
+                                    break;
                                 default:
                                     if(!functParams[k].ParameterType.IsEnum)
                                         Debug.Log("Missing type \"" + functParams.GetType().Name + "\"");
@@ -255,6 +266,10 @@ public class BasicInteractableEditor : Editor
                             case "SpriteRenderer":
                                 thisTrigger.trigger = BaseInteractable.TriggerChange.SpriteRenderer;
                                 thisTrigger.spriteRendVal = (SpriteRenderer)value;
+                                break;
+                            case "TextData":
+                                thisTrigger.trigger = BaseInteractable.TriggerChange.TextData;
+                                thisTrigger.textDataVal = (TextData)value;
                                 break;
                             default:
                                 if (!value.GetType().IsEnum)
@@ -354,7 +369,7 @@ public class BasicInteractableEditor : Editor
                         case BaseInteractable.VarTypes.Transform:
                             try
                             {
-                                thisTrigger.functionParams[k].transVal = (Transform)EditorGUILayout.ObjectField("Value", (Transform)thisTrigger.functionParams[k].transVal, typeof(Transform), true);
+                                thisTrigger.functionParams[k].transVal = (Transform)EditorGUILayout.ObjectField("Value", thisTrigger.functionParams[k].transVal, typeof(Transform), true);
                             }
                             catch
                             {
@@ -364,7 +379,7 @@ public class BasicInteractableEditor : Editor
                         case BaseInteractable.VarTypes.SpriteRenderer:
                             try
                             {
-                                thisTrigger.functionParams[k].spriteRendVal = (SpriteRenderer)EditorGUILayout.ObjectField("Value", (SpriteRenderer)thisTrigger.functionParams[k].spriteRendVal, typeof(SpriteRenderer), true);
+                                thisTrigger.functionParams[k].spriteRendVal = (SpriteRenderer)EditorGUILayout.ObjectField("Value", thisTrigger.functionParams[k].spriteRendVal, typeof(SpriteRenderer), true);
                             }
                             catch
                             {
@@ -383,6 +398,16 @@ public class BasicInteractableEditor : Editor
                                     thisTrigger.functionParams[k].enumVal = 0;
                                     EditorGUILayout.HelpBox("Error!", MessageType.Error);
                                 }
+                            }
+                            break;
+                        case BaseInteractable.VarTypes.TextData:
+                            try
+                            {
+                                thisTrigger.functionParams[k].textDataVal = (TextData)EditorGUILayout.ObjectField("Value", thisTrigger.functionParams[k].textDataVal, typeof(TextData), true);
+                            }
+                            catch
+                            {
+                                thisTrigger.functionParams[k].textDataVal = null;
                             }
                             break;
                     }
@@ -494,6 +519,16 @@ public class BasicInteractableEditor : Editor
                                 thisTrigger.enumVal = 0;
                                 EditorGUILayout.HelpBox("Error!", MessageType.Error);
                             }
+                        }
+                        break;
+                    case BaseInteractable.TriggerChange.TextData:
+                        try
+                        {
+                            thisTrigger.textDataVal = (TextData)EditorGUILayout.ObjectField("Value", thisTrigger.textDataVal, typeof(TextData), true);
+                        }
+                        catch
+                        {
+                            thisTrigger.textDataVal = null;
                         }
                         break;
                 }

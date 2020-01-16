@@ -5,6 +5,16 @@ using UnityEngine;
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster gameMaster;
+    public static InputScript inputScript;
+
+    static System.Random random = new System.Random(0);
+    [HideInInspector] public int randomSeed;
+
+    [HideInInspector] public float frameTime = 1f / 60f;
+
+    public float timeScaleUpdate = 1;
+    [HideInInspector] public float timeScale = 1;
+    public bool lockMovement;
 
     [Header("Player Stats")]
     public int exp;
@@ -29,6 +39,8 @@ public class GameMaster : MonoBehaviour
         {
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += ReferenceSetup;
             gameMaster = this;
+            inputScript = GetComponentInChildren<InputScript>();
+            Application.targetFrameRate = 60;
             DontDestroyOnLoad(this);
         }
         else
@@ -44,7 +56,7 @@ public class GameMaster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timeScale = timeScaleUpdate;
     }
 
     public void LoadScene(string sceneName, bool storePrevPos, int door, SceneType newSceneType)
@@ -84,5 +96,41 @@ public class GameMaster : MonoBehaviour
 
                 break;
         }
+    }
+
+
+
+
+    //All random functions
+    public void GenerateRandomSeed()
+    {
+        randomSeed = Mathf.RoundToInt((Input.mousePosition.x * 153) + (Input.mousePosition.y * 153) + Mathf.Clamp(Time.realtimeSinceStartup, 25, 158976000) +
+            ((Time.unscaledDeltaTime * 10000) * (((inputScript.shootDown) ? 5 : 1) + ((inputScript.bombDown) ? 17 : -5) + ((inputScript.directionalInput.x > 0) ? 1 : 2)
+            + ((inputScript.directionalInput.y < 0) ? 11 : 22))));
+        UpdateSeed(randomSeed);
+    }
+
+    public void UpdateSeed(int newSeed)
+    {
+        randomSeed = newSeed;
+        random = new System.Random(randomSeed);
+        Debug.Log("Game's Random is set to " + randomSeed);
+    }
+
+    public static int Random(int lower, int upper)
+    {
+        return random.Next(lower, upper);
+    }
+
+    public static float Random(float lower, float upper)
+    {
+
+        return (((float)random.NextDouble() * Mathf.Abs(lower - upper)) + lower);
+    }
+
+    public static float Random(Vector2 constraints)
+    {
+
+        return (((float)random.NextDouble() * Mathf.Abs(constraints.x - constraints.y)) + constraints.x);
     }
 }

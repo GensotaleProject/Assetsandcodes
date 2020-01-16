@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class OverworldPlayer : MonoBehaviour
 {
+    GameMaster gameMaster;
     InputScript input;
     RoomMaster roomMaster;
 
@@ -34,16 +35,20 @@ public class OverworldPlayer : MonoBehaviour
     {
         input = InputScript.inputScript;
         roomMaster = RoomMaster.roomMaster;
+        gameMaster = GameMaster.gameMaster;
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetDirectionalInputs();
+        if (!gameMaster.lockMovement)
+            GetDirectionalInputs();
+        else
+            directionInputs = Vector2.zero;
         UpdateAnim();
         CreateColliders();
         Collisions();
-        thisTrans.position += (Vector3)(directionInputs * moveSpeed * (1f / 60f));
+        thisTrans.position += (Vector3)(directionInputs * moveSpeed * gameMaster.timeScale * gameMaster.frameTime);
     }
 
     void CreateColliders()
@@ -104,7 +109,7 @@ public class OverworldPlayer : MonoBehaviour
     void Collisions()
     {
         int colliderCount = OverworldCollider.colliders.Count;
-        LinkedListNode<OverworldCollider> platformNode = OverworldCollider.colliders.First;
+        LinkedListNode<OverworldCollider> tileNode = OverworldCollider.colliders.First;
         OverworldCollider platform;
         Vector2 worldPosCenter;
         Vector2 scale;
@@ -116,8 +121,14 @@ public class OverworldPlayer : MonoBehaviour
         Vector2 distance;
         for (int i = 0; i < colliderCount; i++)
         {
+            platform = tileNode.Value;
 
-            platform = platformNode.Value;
+            if (platform.thisTrans == thisTrans)
+            {
+                tileNode = tileNode.Next;
+                continue;
+            }
+
             scale = platform.thisTrans.lossyScale;
             worldPosCenter = platform.thisTrans.position + (Vector3)(platform.offset * scale);
 
@@ -147,7 +158,7 @@ public class OverworldPlayer : MonoBehaviour
                 }
             }
 
-            platformNode = platformNode.Next;
+            tileNode = tileNode.Next;
         }
     }
 

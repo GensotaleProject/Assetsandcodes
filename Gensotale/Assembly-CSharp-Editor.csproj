@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\DataScripts\Editor\TextDataEditor.cs" />
+    <Compile Include="Assets\Scripts\General\Editor\TextControllerEditor.cs" />
     <Compile Include="Assets\Scripts\Overworld\Master\Editor\BasicInteractableEditor.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>

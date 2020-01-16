@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d556245a45d5da449ab1460cce09e500, type: 3}
+  m_Name: Miko
+  m_EditorClassIdentifier: 
+  portraits:
+  - {fileID: 21300000, guid: cf2ebd9361c34374885546a1316d970f, type: 3}
+  - {fileID: 21300000, guid: 7b7d4483ff0dacd4597df2692a46fa3c, type: 3}
+  - {fileID: 21300000, guid: 3e04c4cfc6da7264e9ae1df01d80829b, type: 3}
+  - {fileID: 21300000, guid: e754a8b0429d23c468c49affa8a7e822, type: 3}
+  - {fileID: 21300000, guid: bc6be2534d2afb341a16512d68b49fef, type: 3}
+  - {fileID: 21300000, guid: 79994160425214345bd18213ee46bc33, type: 3}
+  - {fileID: 21300000, guid: 4f5a919e7cdf69540a1a2930f6dc2da3, type: 3}
+  - {fileID: 21300000, guid: e73ac49cde3fbef4eb4382b2d32b5209, type: 3}
+  - {fileID: 21300000, guid: aca2f9be75ab8e34ba21510978ccd83d, type: 3}
+  - {fileID: 21300000, guid: b2b9b0d0bbb23af4d92de563e59f55b7, type: 3}
+  - {fileID: 21300000, guid: cb53dd87a0e5b0f41bb282cdcab5f916, type: 3}
+  - {fileID: 21300000, guid: 685edb5a492ff6a479978ea6ae06c526, type: 3}
+  - {fileID: 21300000, guid: 8dcb31590d0cb0f4db6561596716f9bb, type: 3}
+  - {fileID: 21300000, guid: b803f1fdf22cf9845a47a341222eea7a, type: 3}
+  - {fileID: 21300000, guid: 166de6c5425296046bc85e72d0c629c5, type: 3}
+  - {fileID: 21300000, guid: 7edef9906e39459448a704fd2b1f94f7, type: 3}
+  - {fileID: 21300000, guid: 50305a4655820fc4e8697527f80a533a, type: 3}
+  speakSound: {fileID: 8300000, guid: c98fd54a10a4b074dba1f348a2e40b58, type: 3}
+  horizontalPosition: -120
+  leftMargin: 85

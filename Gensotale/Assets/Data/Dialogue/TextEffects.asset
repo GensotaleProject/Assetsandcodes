@@ -1,0 +1,427 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d75f5bb5d7fd044b9fe9c2bd781653, type: 3}
+  m_Name: TextEffects
+  m_EditorClassIdentifier: 
+  lines:
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 1
+    translation:
+    - Ghost text
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 5
+      textSound: {fileID: 8300000, guid: c98fd54a10a4b074dba1f348a2e40b58, type: 3}
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    effectList:
+    - effectType: 4
+      distance: 1
+      speed: 0.5
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    - effectType: 1
+      distance: 4
+      speed: 0.255
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    colorList:
+    - effectType: 1
+      colors:
+      - serializedVersion: 2
+        rgba: 2533359615
+      - serializedVersion: 2
+        rgba: 855638015
+      time: 2
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Bounce
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    effectList:
+    - effectType: 1
+      distance: 1
+      speed: 1
+      startIndex: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    colorList: []
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Shake
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 0400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    effectList:
+    - effectType: 2
+      distance: 1
+      speed: 1
+      startIndex: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 0400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    colorList: []
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Wind Wave
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    effectList:
+    - effectType: 3
+      distance: 1
+      speed: 1
+      startIndex: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      endIndex: 08000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    colorList: []
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Dance
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 04000000000000000000000000000000
+    effectList:
+    - effectType: 4
+      distance: 1
+      speed: 1
+      startIndex: 00000000000000000000000000000000
+      endIndex: 04000000000000000000000000000000
+    colorList: []
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Flash
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 0a000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 1
+      colors:
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4278222335
+      - serializedVersion: 2
+        rgba: 4278255615
+      - serializedVersion: 2
+        rgba: 4278255360
+      - serializedVersion: 2
+        rgba: 4294967040
+      - serializedVersion: 2
+        rgba: 4294920704
+      - serializedVersion: 2
+        rgba: 4294902015
+      time: 2
+      startIndex: 00000000000000000000000000000000
+      endIndex: 0a000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Wave
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 2
+      colors:
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4278228735
+      - serializedVersion: 2
+        rgba: 4278255615
+      - serializedVersion: 2
+        rgba: 4278255360
+      - serializedVersion: 2
+        rgba: 4294967040
+      - serializedVersion: 2
+        rgba: 4294927360
+      - serializedVersion: 2
+        rgba: 4294902015
+      time: 0.5
+      startIndex: 00000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Vert
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 3
+      colors:
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4278255360
+      - serializedVersion: 2
+        rgba: 4294901766
+      - serializedVersion: 2
+        rgba: 4291821823
+      - serializedVersion: 2
+        rgba: 4278255359
+      - serializedVersion: 2
+        rgba: 4294377216
+      time: 5
+      startIndex: 00000000000000000000000000000000
+      endIndex: 09000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 00000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 0
+      colors:
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4278223615
+      - serializedVersion: 2
+        rgba: 4294574335
+      time: 0
+      startIndex: 00000000000000000000000000000000
+      endIndex: 04000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Stripe Left
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 00000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 4
+      colors:
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4278190335
+      time: 0.5
+      startIndex: 00000000000000000000000000000000
+      endIndex: 10000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Stripe Right
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 00000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 5
+      colors:
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4278190335
+      time: 0.5
+      startIndex: 00000000000000000000000000000000
+      endIndex: 11000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Diagonal Left
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 12000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 6
+      colors:
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4294967295
+      time: 0.25
+      startIndex: 00000000000000000000000000000000
+      endIndex: 12000000000000000000000000000000
+    dialogueLineCharDatas: []
+  - skipDelay: 0
+    progressAutomatically: 0
+    addStar: 0
+    translation:
+    - Color Diagonal Right
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    textBasics:
+    - textDelay: 0
+      textSound: {fileID: 0}
+      startIndex: 00000000000000000000000000000000
+      endIndex: 00000000000000000000000000000000
+    effectList: []
+    colorList:
+    - effectType: 7
+      colors:
+      - serializedVersion: 2
+        rgba: 4278190335
+      - serializedVersion: 2
+        rgba: 4294967295
+      - serializedVersion: 2
+        rgba: 4294967295
+      time: 0.25
+      startIndex: 00000000000000000000000000000000
+      endIndex: 13000000000000000000000000000000
+    dialogueLineCharDatas: []
+  chars: []
+  charDefaultPositions: []

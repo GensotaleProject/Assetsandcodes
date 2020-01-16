@@ -9,6 +9,8 @@ public class BaseInteractable : MonoBehaviour
     public Vector2 interactOffset;
     public float interactDistance;
     public bool loopIndex;
+    public bool triggered;
+    public bool playedDialogue;
 
     public int interactIndex;
     [SerializeField] public List<InteractionEffects> interactionEffects = new List<InteractionEffects>() { new InteractionEffects() };
@@ -19,6 +21,9 @@ public class BaseInteractable : MonoBehaviour
     [System.Serializable]
     public class InteractionEffects
     {
+        public bool waitForDialogue;
+        public TextData dialogue;
+
         public List<VarChanges> varChanges = new List<VarChanges>();
 
         /*[HideInInspector, SerializeField] public List<bool> boolVar = new List<bool>();
@@ -67,6 +72,7 @@ public class BaseInteractable : MonoBehaviour
         public Transform transVal;
         public SpriteRenderer spriteRendVal;
         public int enumVal;
+        public TextData textDataVal;
 
         //[SerializeField] public object value;
         [SerializeField] public List<FunctionParams> functionParams = new List<FunctionParams>();
@@ -92,6 +98,7 @@ public class BaseInteractable : MonoBehaviour
         public Transform transVal;
         public SpriteRenderer spriteRendVal;
         public int enumVal;
+        public TextData textDataVal;
 
         public FunctionParams()
         {
@@ -99,8 +106,8 @@ public class BaseInteractable : MonoBehaviour
         }
     }
 
-    public enum TriggerChange { Function, Bool, Int, Float, String, Vector2, Vector3, GameObject, Transform, SpriteRenderer, Enum }
-    public enum VarTypes { Bool, Int, Float, String, Vector2, Vector3, GameObject, Transform, SpriteRenderer, Enum }
+    public enum TriggerChange { Function, Bool, Int, Float, String, Vector2, Vector3, GameObject, Transform, SpriteRenderer, Enum, TextData }
+    public enum VarTypes { Bool, Int, Float, String, Vector2, Vector3, GameObject, Transform, SpriteRenderer, Enum, TextData }
 
     private void Awake()
     {
@@ -121,8 +128,36 @@ public class BaseInteractable : MonoBehaviour
 
     void CheckInteract()
     {
-        if(InputScript.inputScript.shootDown && Vector2.Distance(playerTrans.position, (Vector2)thisTrans.position + interactOffset) <= interactDistance)
-            TriggerInteraction();
+        if (InputScript.inputScript.shootDown)
+            if (!TextController.textController.dialogueBoxOpen && !TextController.textController.dialogueJustFinished)
+                if (Vector2.Distance(playerTrans.position, (Vector2)thisTrans.position + interactOffset) <= interactDistance)
+                    triggered = true;
+
+        if (triggered)
+        {
+            if(!playedDialogue && interactionEffects[interactIndex].dialogue != null)
+            {
+                if (TextController.textController != null)
+                    TextController.textController.StartDialogue(interactionEffects[interactIndex].dialogue);
+            }
+            PlayerFaceInteraction();
+            playedDialogue = true;
+            if (playedDialogue && (!interactionEffects[interactIndex].waitForDialogue || !TextController.textController.dialogueBoxOpen))
+            {
+                TriggerInteraction();
+                triggered = false;
+                playedDialogue = false;
+            }
+        }
+    }
+
+    void PlayerFaceInteraction()
+    {
+        float angle = MathFunctions.FindAngle(playerTrans.position, thisTrans.position);
+        int facing = Mathf.RoundToInt(Mathf.Repeat(angle, 360) / 90f);
+        Animator playerAnim = playerTrans.GetComponentInChildren<Animator>();
+        playerAnim.SetBool("Moving", false);
+        playerAnim.SetInteger("Facing", facing);
     }
 
     void TriggerInteraction()
@@ -187,6 +222,8 @@ public class BaseInteractable : MonoBehaviour
                 return trigger.spriteRendVal;
             case TriggerChange.Enum:
                 return trigger.enumVal;
+            case TriggerChange.TextData:
+                return trigger.textDataVal;
             default:
                 return trigger.boolVal;
         }
@@ -216,6 +253,8 @@ public class BaseInteractable : MonoBehaviour
                 return param.spriteRendVal;
             case VarTypes.Enum:
                 return param.enumVal;
+            case VarTypes.TextData:
+                return param.textDataVal;
             default:
                 return param.boolVal;
         }

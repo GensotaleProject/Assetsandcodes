@@ -5,7 +5,8 @@ using UnityEngine;
 public class TextData : ScriptableObject
 {
     [SerializeField] public List<TextLine> lines = new List<TextLine>();
-    
+    [SerializeField] public List<DialogueCharData> chars = new List<DialogueCharData>();
+
     [System.Serializable]
     public class TextBasics
     {
@@ -30,19 +31,21 @@ public class TextData : ScriptableObject
     {
         public ColorType effectType;
         public List<Color32> colors = new List<Color32>();
-        public float speed;
+        public float time;
         public List<int> startIndex = new List<int>();
         public List<int> endIndex = new List<int>();
     }
 
     public enum EffectType { None, Bounce, Shake, WindWave, Dance };
-    public enum ColorType { Color, Flash, Wave, VertWave };
+    public enum ColorType { Color, Flash, Wave, Vert, VertWaveLeft, VertWaveRight, StripeDiagonalLeft, StripeDiagonalRight };
+
 
     [System.Serializable]
     public class TextLine
     {
         public int skipDelay = 0;
         public bool progressAutomatically;
+        public bool addStar;
         public List<string> translation = new List<string>();
         [Space]
         [Space]
@@ -53,6 +56,10 @@ public class TextData : ScriptableObject
         [Space]
         [Space]
         public List<ColorEffects> colorList = new List<ColorEffects>();
+        [Space]
+        [Space]
+        public int charIndex;
+        public int portraitIndex;
 
         public TextLine()
         {
