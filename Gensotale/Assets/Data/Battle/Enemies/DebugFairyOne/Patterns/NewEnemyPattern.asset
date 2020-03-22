@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c12bc91eab2aa4f8dafec126ae0a75, type: 3}
+  m_Name: NewEnemyPattern
+  m_EditorClassIdentifier: 
+  attackName: []
+  patterns:
+  - burstCount: 8
+    bulletsInBurst: 100
+    overallDegrees: 1000
+    degreeOffset: 0
+    randomDegreeOffset: 2.5
+    perBulletRandomOffset: 1
+    aimed: 1
+    burstDelay: 1
+    initialDelay: 1
+    perBulletDelay:
+    - 0
+    - 0.01
+    bulletType: 1a000000
+    customSpriteType: 01000000
+    customBullet:
+    - {fileID: 0}
+    customHasScript: 00
+    customHasSprite: 00
+    bulletColors: 00000000
+    bulletEndSpeed:
+    - 500
+    bulletStartSpeed:
+    - 100
+    bulletTimeToSpeedUp:
+    - 2
+    turn: 01
+    offsets:
+    - {x: 20, y: 0}
+    - {x: -20, y: 0}
+    turnOffsets: 0101
+  - burstCount: 50
+    bulletsInBurst: 9
+    overallDegrees: 50
+    degreeOffset: 0
+    randomDegreeOffset: 2.5
+    perBulletRandomOffset: 0
+    aimed: 1
+    burstDelay: 1
+    initialDelay: 1
+    perBulletDelay:
+    - 0
+    bulletType: 1d000000
+    customSpriteType: 01000000
+    customBullet:
+    - {fileID: 0}
+    customHasScript: 00
+    customHasSprite: 00
+    bulletColors: 01000000
+    bulletEndSpeed:
+    - 100
+    bulletStartSpeed:
+    - 50
+    bulletTimeToSpeedUp:
+    - 1
+    turn: 01
+    offsets:
+    - {x: 20, y: 0}
+    - {x: -20, y: 0}
+    turnOffsets: 0101
+  - burstCount: 50
+    bulletsInBurst: 15
+    overallDegrees: 360
+    degreeOffset: 0
+    randomDegreeOffset: 360
+    perBulletRandomOffset: 0
+    aimed: 1
+    burstDelay: 1
+    initialDelay: 1
+    perBulletDelay:
+    - 0
+    bulletType: 09000000
+    customSpriteType: 01000000
+    customBullet:
+    - {fileID: 0}
+    customHasScript: 00
+    customHasSprite: 00
+    bulletColors: 04000000
+    bulletEndSpeed:
+    - 50
+    bulletStartSpeed:
+    - 75
+    bulletTimeToSpeedUp:
+    - 1
+    turn: 00
+    offsets:
+    - {x: 20, y: 0}
+    - {x: -20, y: 0}
+    turnOffsets: 0101

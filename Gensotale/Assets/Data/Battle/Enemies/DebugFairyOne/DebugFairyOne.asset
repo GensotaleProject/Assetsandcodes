@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdb1320782a2a94aaf237a11ad1da4b, type: 3}
+  m_Name: DebugFairyOne
+  m_EditorClassIdentifier: 
+  enemyName:
+  - FAIRY
+  - FAIRY
+  - FAIRY
+  - FAIRY
+  maxHp: 20
+  hp: 20
+  xpDrop: 3
+  gDrop: 2
+  defense: 2
+  attack: 3
+  enemyDescription:
+    skipDelay: 0
+    progressAutomatically: 0
+    addStar: 1
+    translation:
+    - '{n}  {a}  {d}'
+    - '{n}  {a}  {d}'
+    - '{n}  {a}  {d}'
+    - '{n}  {a}  {d}'
+    textBasics:
+    - textDelay: 2
+      textSound: {fileID: 0}
+      startIndex: 00000000
+      endIndex: 00000000
+    effectList: []
+    colorList:
+    - effectType: 0
+      colors:
+      - serializedVersion: 2
+        rgba: 4294967295
+      time: 0
+      startIndex: 00000000
+      endIndex: 00000000
+    charIndex: 0
+    portraitIndex: 0
+  enemyLines:
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  orderedDialogue: 0
+  battlefieldText:
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  - priority: 0
+    line:
+      skipDelay: 0
+      progressAutomatically: 0
+      addStar: 0
+      translation:
+      - 
+      - 
+      - 
+      - 
+      textBasics: []
+      effectList: []
+      colorList: []
+      charIndex: 0
+      portraitIndex: 0
+    conditions: []
+  actData: []
+  patterns:
+  - {fileID: 11400000, guid: 227f536dce303da4ca25623262a56c88, type: 2}
+  enemySpawn: {fileID: 1696381684617328075, guid: de36531c4c02ddd4c8ddb24a623c9025,
+    type: 3}
+  properties: []

@@ -155,8 +155,8 @@ public class TextController : MonoBehaviour
     {
         if(dialogueBoxOpen)
         {
-            TextEffectProcessing();
-            TextVisibility(textIndex);
+            TextEffectProcessing(textData.lines[lineIndex], dialogueText, textInfo, ref colorTime, ref colorIndex, languageSetting);
+            TextVisibility(textIndex, dialogueText, textInfo);
         }
     }
 
@@ -275,8 +275,9 @@ public class TextController : MonoBehaviour
         timeSinceLineChange = 0;
     }
 
-    void TextVisibility(int endVisibility)
+    public static void TextVisibility(int endVisibility, TextMeshPro dialogueText, TMP_TextInfo textInfo)
     {
+        
         Color32[] colors = dialogueText.mesh.colors32;
         int vertIndex;
         for (int i = 0; i < textInfo.characterCount; i++)
@@ -296,22 +297,26 @@ public class TextController : MonoBehaviour
         dialogueText.mesh.colors32 = colors;
     }
 
-    void TextEffectProcessing()
+    public static void TextEffectProcessing(TextData.TextLine line, TextMeshPro dialogueText, TMP_TextInfo textInfo, ref float[] colorTimes, ref int[] colorIndex, int languageSetting)
     {
         dialogueText.ForceMeshUpdate();
         Vector3[] vertPos;
         int vertIndex;
         vertPos = dialogueText.mesh.vertices;
+        bool addStar = line.addStar;
+        GameMaster gameMaster = GameMaster.gameMaster;
+        AnimationCurve bounceCurve = gameMaster.bounceCurve;
+        AnimationCurve scaleCurve = gameMaster.scaleCurve;
 
         float scaleSize;
 
-        for (int i = 0; i < textData.lines[lineIndex].effectList.Count; i++)
+        for (int i = 0; i < line.effectList.Count; i++)
         {
-            switch (textData.lines[lineIndex].effectList[i].effectType)
+            switch (line.effectList[i].effectType)
             {
                 case TextData.EffectType.Bounce:
-                    for (int a = textData.lines[lineIndex].effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    for (int a = line.effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -319,22 +324,22 @@ public class TextController : MonoBehaviour
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
                         for (int b = 0; b < 4; b++)
                         {
-                            vertPos[vertIndex + b].y += bounceCurve.Evaluate(Mathf.Repeat(a / 5f + (Time.time * textData.lines[lineIndex].effectList[i].speed), 1))
-                                * textData.lines[lineIndex].effectList[i].distance;
+                            vertPos[vertIndex + b].y += bounceCurve.Evaluate(Mathf.Repeat(a / 5f + (Time.time * line.effectList[i].speed), 1))
+                                * line.effectList[i].distance;
                         }
                     }
                     break;
 
                 case TextData.EffectType.Shake:
                     Vector3 newOffset;
-                    for (int a = textData.lines[lineIndex].effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    for (int a = line.effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
-                        newOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)).normalized * textData.lines[lineIndex].effectList[i].distance;
+                        newOffset = new Vector2(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)).normalized * line.effectList[i].distance;
 
                         for (int b = 0; b < 4; b++)
                         {
@@ -344,8 +349,8 @@ public class TextController : MonoBehaviour
                     break;
 
                 case TextData.EffectType.WindWave:
-                    for (int a = textData.lines[lineIndex].effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    for (int a = line.effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -354,8 +359,8 @@ public class TextController : MonoBehaviour
 
                         for (int b = 0; b < 2; b += 2)
                         {
-                            scaleSize = scaleCurve.Evaluate(Mathf.Repeat((a) / 5f + (Time.time * textData.lines[lineIndex].effectList[i].speed), 1))
-                                * textData.lines[lineIndex].effectList[i].distance;
+                            scaleSize = scaleCurve.Evaluate(Mathf.Repeat((a) / 5f + (Time.time * line.effectList[i].speed), 1))
+                                * line.effectList[i].distance;
                             vertPos[vertIndex + b].x += scaleSize * Mathf.Sign(b - 1);
                             vertPos[vertIndex + b].y += scaleSize * Mathf.Sign(b - 1);
                             vertPos[vertIndex + b + 1].x += scaleSize * Mathf.Sign(b - 1);
@@ -365,8 +370,8 @@ public class TextController : MonoBehaviour
                     break;
 
                 case TextData.EffectType.Dance:
-                    for (int a = textData.lines[lineIndex].effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    for (int a = line.effectList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.effectList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -375,8 +380,8 @@ public class TextController : MonoBehaviour
 
                         for (int b = 0; b < 4; b++)
                         {
-                            scaleSize = scaleCurve.Evaluate(Mathf.Repeat((b) / 5f + (Time.time * textData.lines[lineIndex].effectList[i].speed), 1))
-                                * textData.lines[lineIndex].effectList[i].distance;
+                            scaleSize = scaleCurve.Evaluate(Mathf.Repeat((b) / 5f + (Time.time * line.effectList[i].speed), 1))
+                                * line.effectList[i].distance;
                             vertPos[vertIndex + b].x += scaleSize * Mathf.Sign(b - 1);
                             vertPos[vertIndex + b].y += scaleSize * Mathf.Sign(b - 1);
                         }
@@ -384,8 +389,8 @@ public class TextController : MonoBehaviour
                     break;
 
                 /*case TextData.EffectType.:
-                    for (int a = textData.lines[lineIndex].effectList[i].startIndex[languageSetting];
-                        a < textData.lines[lineIndex].effectList[i].endIndex[languageSetting] + 1; a++)
+                    for (int a = line.effectList[i].startIndex[languageSetting];
+                        a < line.effectList[i].endIndex[languageSetting] + 1; a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -408,13 +413,13 @@ public class TextController : MonoBehaviour
 
         Color32[] colors = dialogueText.mesh.colors32;
         float colorValue = 0;
-        for (int i = 0; i < textData.lines[lineIndex].colorList.Count; i++)
+        for (int i = 0; i < line.colorList.Count; i++)
         {
-            switch (textData.lines[lineIndex].colorList[i].effectType)
+            switch (line.colorList[i].effectType)
             {
                 case TextData.ColorType.Color:
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -423,22 +428,22 @@ public class TextController : MonoBehaviour
 
                         for (int b = 0; b < 4; b++)
                         {
-                            colors[vertIndex + b] = textData.lines[lineIndex].colorList[i].colors[Mathf.Clamp(b, 0,
-                                textData.lines[lineIndex].colorList[i].colors.Count - 1)];
+                            colors[vertIndex + b] = line.colorList[i].colors[Mathf.Clamp(b, 0,
+                                line.colorList[i].colors.Count - 1)];
                         }
                     }
                     break;
 
                 case TextData.ColorType.Flash:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -447,23 +452,23 @@ public class TextController : MonoBehaviour
 
                         for (int b = 0; b < 4; b++)
                         {
-                            colors[vertIndex + b] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i], textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + 1, textData.lines[lineIndex].colorList[i].colors.Count)], 
+                            colors[vertIndex + b] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i], line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + 1, line.colorList[i].colors.Count)], 
                                 colorValue);
                         }
                     }
                     break;
 
                 case TextData.ColorType.Wave:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
@@ -472,144 +477,144 @@ public class TextController : MonoBehaviour
 
                         for (int b = 0; b < 4; b++)
                         {
-                            colors[vertIndex + b] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                            colors[vertIndex + b] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
                         }
                     }
                     break;
 
                 case TextData.ColorType.Vert:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
 
-                        colors[vertIndex + 0] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 1] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 2] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 3, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 3] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 3, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 4, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 0] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 1] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 2] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 3, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 3] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 3, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 4, line.colorList[i].colors.Count)], colorValue);
                     }
                     break;
                     
                 case TextData.ColorType.VertWaveLeft:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
 
-                        colors[vertIndex + 0] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 1] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 2] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 3] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 0] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 1] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 2] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 3] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
                     }
                     break;
 
                 case TextData.ColorType.VertWaveRight:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
 
-                        colors[vertIndex + 0] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 1] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 2] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 3] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 0] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 1] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 2] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 3] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
                     }
                     break;
 
                 case TextData.ColorType.StripeDiagonalLeft:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
 
-                        colors[vertIndex + 0] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 1] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 2] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 3] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 0] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 1] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 2] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 3] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
                     }
                     break;
 
                 case TextData.ColorType.StripeDiagonalRight:
-                    colorTime[i] += gameMaster.frameTime * textData.lines[lineIndex].colorList[i].colors.Count;
-                    if (colorTime[i] > textData.lines[lineIndex].colorList[i].time)
+                    colorTimes[i] += gameMaster.frameTime * line.colorList[i].colors.Count;
+                    if (colorTimes[i] > line.colorList[i].time)
                     {
                         colorIndex[i]++;
-                        colorTime[i] -= textData.lines[lineIndex].colorList[i].time;
+                        colorTimes[i] -= line.colorList[i].time;
                     }
-                    colorValue = colorTime[i] / textData.lines[lineIndex].colorList[i].time;
-                    for (int a = textData.lines[lineIndex].colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
-                        a < textData.lines[lineIndex].colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
+                    colorValue = colorTimes[i] / line.colorList[i].time;
+                    for (int a = line.colorList[i].startIndex[languageSetting] + (addStar ? 2 : 0);
+                        a < line.colorList[i].endIndex[languageSetting] + 1 + (addStar ? 2 : 0); a++)
                     {
                         if (textInfo.characterInfo[a].character == ' ')
                             continue;
 
                         vertIndex = textInfo.characterInfo[a].vertexIndex;
 
-                        colors[vertIndex + 0] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 1] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 2] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
-                        colors[vertIndex + 3] = Color32.Lerp(textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, textData.lines[lineIndex].colorList[i].colors.Count)],
-                                textData.lines[lineIndex].colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, textData.lines[lineIndex].colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 0] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 1] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 2] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 2, line.colorList[i].colors.Count)], colorValue);
+                        colors[vertIndex + 3] = Color32.Lerp(line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a, line.colorList[i].colors.Count)],
+                                line.colorList[i].colors[(int)Mathf.Repeat(colorIndex[i] + a + 1, line.colorList[i].colors.Count)], colorValue);
                     }
                     break;
             }

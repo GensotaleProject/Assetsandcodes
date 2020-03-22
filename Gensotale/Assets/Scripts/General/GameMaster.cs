@@ -20,14 +20,34 @@ public class GameMaster : MonoBehaviour
     public int exp;
     public int lv;
 
-    [Header("Object References")]
-    public Transform playerTrans;
-
     [Header("Scene Transition")]
     public SceneType curSceneType;
     public bool loading;
     public Vector2 playerPosInPrevScene;
     [HideInInspector] public int enteringDoor = -1;
+
+    [Header("Object References")]
+    public Transform playerTrans;
+    public GameObject[] bulletSpawns;
+
+    [Header("Sprites & Anims")]
+    public Sprite[] destroyEffects;
+    public Sprite[] whiteBullets;
+    public RuntimeAnimatorController[] whiteBulletAnims;
+    public Sprite[] whiteInvertedBullets;
+    public RuntimeAnimatorController[] whiteInvertedBulletAnims;
+    public Sprite[] blueBullets;
+    public RuntimeAnimatorController[] blueBulletAnims;
+    public Sprite[] blueInvertedBullets;
+    public RuntimeAnimatorController[] blueInvertedBulletAnims;
+    public Sprite[] orangeBullets;
+    public RuntimeAnimatorController[] orangeBulletAnims;
+    public Sprite[] orangeInvertedBullets;
+    public RuntimeAnimatorController[] orangeInvertedBulletAnims;
+
+    [Header("Misc")]
+    public AnimationCurve bounceCurve;
+    public AnimationCurve scaleCurve;
 
     public Language languageSetting;
     public enum SceneType { Overworld, Battle, Menu, Misc }
@@ -93,7 +113,7 @@ public class GameMaster : MonoBehaviour
                 break;
 
             case SceneType.Battle:
-
+                BattleMaster battleMaster = GameObject.Find("BattleMaster").GetComponent<BattleMaster>();
                 break;
         }
     }

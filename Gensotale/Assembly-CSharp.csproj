@@ -68,12 +68,25 @@
     <Compile Include="Assets\Scripts\General\GameMaster.cs" />
     <Compile Include="Assets\Scripts\General\InputScript.cs" />
     <Compile Include="Assets\Scripts\General\TextController.cs" />
+    <Compile Include="Assets\Scripts\Misc\RotationScript.cs" />
     <Compile Include="Assets\Scripts\Overworld\Character\OverworldNPC.cs" />
     <Compile Include="Assets\Scripts\Overworld\Character\OverworldPlayer.cs" />
     <Compile Include="Assets\Scripts\Overworld\Master\BaseInteractable.cs" />
     <Compile Include="Assets\Scripts\Overworld\Master\RoomMaster.cs" />
     <Compile Include="Assets\Scripts\Overworld\Movement\LoadingZone.cs" />
     <Compile Include="Assets\Scripts\Overworld\Movement\OverworldCollider.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\ACTData.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\BasicEditablePattern.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\EncounterData.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\EnemyData.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\EnemyPatternData.cs" />
+    <Compile Include="Assets\Scripts\STG\DataScripts\Pattern.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\BaseBulletScript.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\BaseEnemy.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\BattleMaster.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\BoxBoundary.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\PlayerDamageCollider.cs" />
+    <Compile Include="Assets\Scripts\STG\Engine\STGPlayer.cs" />
     <Compile Include="Assets\Scripts\Utility\MathFunctions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -132,37 +145,37 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>C:/Users/Damion/Documents/UnityProjects/Gensotale/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>C:/Users/Damion/Documents/GitHub/GensotaleActiveDev/Gensotale/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f3/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
